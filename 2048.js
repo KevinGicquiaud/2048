@@ -1,16 +1,43 @@
-document.addEventListener("DOMContentLoaded", pageReady(), false);
-var score = 0;
-function pageReady() {
+$(document).ready(function () {
+    var score = 0;
     var table = [];
-    var request = new XMLHttpRequest();
-    request.open("GET", "save.json", false);
-    request.send(null);
-    var my_JSON_object = JSON.parse(request.responseText);
-    var size = my_JSON_object.game.tableSave.size;
 
-    createGrid(table, size, my_JSON_object.game);
-    displayTable(table);
-    displayHTMLGrid(table);
+    initialisation();
+
+    function initialisation() {
+        $.getJSON("save.json", function (data) {
+            var size = data.game.tableSave.size;
+            createGrid(table, size, data.game);
+            displayHTMLGrid(table);
+        }, 'json');
+    }
+
+    $(this).on("keyup", function (e) {
+        var code = e.keyCode;
+        console.log('keyup');
+        switch (code) {
+            case 37:
+                console.log('gauche');
+                moveLeft(table, score);
+                addRandomTwo(table);
+                break;
+            case 38:
+                moveUp(table, score);
+                addRandomTwo(table);
+                break;
+            case 39:
+                moveRight(table, score);
+                addRandomTwo(table);
+                break;
+            case 40:
+                moveDown(table, score);
+                addRandomTwo(table);
+                break;
+        }
+        showScore(score);
+        displayHTMLGrid(table);
+        isLose(table, score);
+    });
 
     function isLose(table, score) {
         var pseudo = document.getElementById("pseudo");
@@ -77,31 +104,6 @@ function pageReady() {
         }
     }
 
-    window.onkeyup = function (e) {
-        var code = e.keyCode;
-        switch (code) {
-            case 37:
-                moveLeft(table, score);
-                addRandomTwo(table);
-                break;
-            case 38:
-                moveUp(table, score);
-                addRandomTwo(table);
-                break;
-            case 39:
-                moveRight(table, score);
-                addRandomTwo(table);
-                break;
-            case 40:
-                moveDown(table, score);
-                addRandomTwo(table);
-                break;
-        }
-        showScore(score);
-        displayHTMLGrid(table);
-        isLose(table, score);
-    }
-
     function showScore(score) {
         var divScore = document.getElementById('score');
         divScore.innerText = "Votre score " + score;
@@ -134,7 +136,7 @@ function pageReady() {
 
     }
 
-    function moveDown(table, score) {
+    function moveDown(table) {
         for (var i = 0; i < table.length - 1; i++) {
             for (var j = 0; j < table.length; j++) {
                 if (table[i + 1][j] == 0) {
@@ -157,7 +159,7 @@ function pageReady() {
         }
     }
 
-    function moveLeft(table, score) {
+    function moveLeft(table) {
         for (var i = table.length - 1; i >= 0; i--) {
             for (var j = table.length - 1; j >= 0; j--) {
                 if (table[i][j - 1] == 0) {
@@ -180,7 +182,7 @@ function pageReady() {
         }
     }
 
-    function moveRight(table, score) {
+    function moveRight(table) {
         for (var i = 0; i < table.length; i++) {
             for (var j = 0; j < table.length; j++) {
                 if (table[i][j + 1] == 0) {
@@ -213,16 +215,6 @@ function pageReady() {
         }
     }
 
-    function displayTable(table) {
-        var stockRow = '';
-        for (var i = 0; i < table.length; i++) {
-            for (var j = 0; j < table.length; j++) {
-                stockRow += '[' + table[i][j] + ']';
-            }
-            stockRow = '';
-        }
-    }
-
     function addRandomTwo(table) {
         var emptyCells = [];
         for (var i = 0; i < table.length; i++) {
@@ -245,53 +237,51 @@ function pageReady() {
         if (element != null) {
             element.remove();
         }
-        var tableHTML = document.createElement('table');
-        tableHTML.setAttribute('id', '2048');
+        var tableHTML = $('<table></table>');
+        tableHTML.attr('id', '2048');
         for (var i = 0; i < table.length; i++) {
-            var row = document.createElement('tr');
+            var row = $('<tr></tr>');
             for (var j = 0; j < table.length; j++) {
-                var col = document.createElement('td');
+                var col = $('<td></td>');
                 switch (table[i][j]) {
                     case 0:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'a');
+                        col.removeAttr('class');
+                        col.attr('class', 'a');
                         break;
                     case 2:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'b');
+                        col.removeAttr('class');
+                        col.attr('class', 'b');
                         break;
                     case 4:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'c');
+                        col.removeAttr('class');
+                        col.attr('class', 'c');
                         break;
                     case 8:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'd');
+                        col.removeAttr('class');
+                        col.attr('class', 'd');
                         break;
                     case 16:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'e');
+                        col.removeAttr('class');
+                        col.attr('class', 'e');
                         break;
                     case 32:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'f');
+                        col.removeAttr('class');
+                        col.attr('class', 'f');
                         break;
                     case 64:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'g');
+                        col.removeAttr('class');
+                        col.attr('class', 'g');
                         break;
                     case 128:
-                        col.removeAttribute('class');
-                        col.setAttribute('class', 'h');
+                        col.removeAttr('class');
+                        col.attr('class', 'h');
                         break;
                 }
-                col.innerText = table[i][j];
-                row.appendChild(col);
+                col.text(table[i][j]);
+                row.append(col);
             }
-            tableHTML.appendChild(row)
+            tableHTML.append(row);
         }
-        document.body.appendChild(tableHTML);
-
-
+        $("body").append(tableHTML);
     }
-}
+});
