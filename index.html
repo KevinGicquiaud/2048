@@ -7,20 +7,41 @@
 </head>
 <body>
     <div>
-        <h1>2048</h1>
-        <br><br>
-        <div id="score">Votre score 0</div>
-        <br><br>
+        <h1>
+        2048
+        <div id="div-score">Votre score <div id="score">0</div></div>
+        </h1>
     </div>
     <script src="2048.js"></script>
 
     <style>
+        body{
+            background-color: #FAF8EF;
+            font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+            font-weight: bold;
+            display: inline-block;
+            text-align: center;
+        }
+        h1{
+            font-size: 70px;
+        }
         table {
             background-color: #776E65;
+            border-radius: 6px;
+            padding: 4px;
+        }
+        #div-score {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #BBADA0;
+            height: 50px;
+            width: 150px;
+            text-align: center;
+            display: inline-block;
+            border-radius: 2px;
         }
         #score {
-            font-size: 40px;
-            font-weight: bold;
+            color: white;
         }
         td {
             text-align: center;
@@ -29,10 +50,12 @@
             border: 3px solid #776E65;
             width: 100px;
             height: 100px;
+            border-radius: 4px;
         }
 
         .a {
             background-color: #CDC1B5;
+            color: #CDC1B5;
         }
         .b {
             background-color: #EEE4DA;
@@ -45,14 +68,38 @@
             color: white;
         }
         .e {
-            background-color: #F09764;
+            background-color: #F59563;
             color: white;
         }
         .f {
-            background-color: #EE805B;
+            background-color: #F67C5F;
             color: white;
         }
         .g {
+            background-color: #F65E3B;
+            color: white;
+        }
+        .h {
+            background-color: #EDCF72;
+            color: white;
+        }
+        .i {
+            background-color: #EDCC61;
+            color: white;
+        }
+        .j {
+            background-color: #EDC850;
+            color: white;
+        }
+        .k {
+            background-color: #EDCE71;
+            color: white;
+        }
+        .l {
+            background-color: #EDCE71;
+            color: white;
+        }
+        .m {
             background-color: #EDCE71;
             color: white;
         }

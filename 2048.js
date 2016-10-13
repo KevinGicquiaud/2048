@@ -14,10 +14,8 @@ $(document).ready(function () {
 
     $(this).on("keyup", function (e) {
         var code = e.keyCode;
-        console.log('keyup');
         switch (code) {
             case 37:
-                console.log('gauche');
                 moveLeft(table, score);
                 addRandomTwo(table);
                 break;
@@ -106,7 +104,7 @@ $(document).ready(function () {
 
     function showScore(score) {
         var divScore = document.getElementById('score');
-        divScore.innerText = "Votre score " + score;
+        divScore.innerText = score;
     }
 
     function incrementScore(value) {
@@ -275,6 +273,26 @@ $(document).ready(function () {
                     case 128:
                         col.removeAttr('class');
                         col.attr('class', 'h');
+                        break;
+                    case 256:
+                        col.removeAttr('class');
+                        col.attr('class', 'i');
+                        break;
+                    case 512:
+                        col.removeAttr('class');
+                        col.attr('class', 'j');
+                        break;
+                    case 1024:
+                        col.removeAttr('class');
+                        col.attr('class', 'k');
+                        break;
+                    case 2048:
+                        col.removeAttr('class');
+                        col.attr('class', 'l');
+                        break;
+                    case 5096:
+                        col.removeAttr('class');
+                        col.attr('class', 'm');
                         break;
                 }
                 col.text(table[i][j]);
