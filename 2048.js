@@ -110,6 +110,7 @@ $(document).ready(function () {
     function incrementScore(value) {
         score += value;
     }
+
     function moveUp(table) {
         for (var i = table.length - 1; i > 0; i--) {
             for (var j = table.length - 1; j >= 0; j--) {
@@ -133,10 +134,32 @@ $(document).ready(function () {
         }
 
     }
+    // Newer Version but not working
+    /* function moveUp(table) {
+        for (var i = 0; i < table.length; i++) {
+            var minMerge = 0;
+            for (var j = 0; j < table.length; j++) {
+                if(table[i][j] > 0){
+                    for (var k = i; i > minMerge; k--){
+                        if (table[k - 1][j] == 0) {
+                            table[k - 1][j] = table[i][j];
+                            table[k][j] = 0;
+                        } else if (table[k - 1][j] == table[k][j]) {
+                            incrementScore(table[k][j] * 2)
+                            table[k - 1][j] += table[k][j];
+                            table[k][j] = 0;
+                            minMerge = k;
+                        }
+                    }
+                }
+            }
+        }
+    } */
 
     function moveDown(table) {
         for (var i = 0; i < table.length - 1; i++) {
             for (var j = 0; j < table.length; j++) {
+
                 if (table[i + 1][j] == 0) {
                     table[i + 1][j] = table[i][j];
                     table[i][j] = 0;
@@ -157,7 +180,30 @@ $(document).ready(function () {
         }
     }
 
-    function moveLeft(table) {
+    // Newer Version but not working
+    /* function moveDown(table) {
+        for (var i = table.length; i > 0; i--) {
+            var minMerge = table.length - 1;
+            for (var j = 0; j <= table.length - 1; j++) {
+                if(table[i][j] > 0){
+                    for(var k = i; k < minMerge; k++){
+                        if (table[k + 1][j] == 0) {
+                            table[k + 1][j] = table[k][j];
+                            table[k][j] = 0;
+                        } else if (table[k + 1][j] == table[k][j]) {
+                            incrementScore(table[k][j] * 2)
+                            table[k + 1][j] += table[k][j];
+                            table[k][j] = 0;
+                            minMerge = k;
+                        }
+                    }
+                }
+            }
+        }
+    } */
+
+    // Old Version
+    /* function moveLeft(table) {
         for (var i = table.length - 1; i >= 0; i--) {
             for (var j = table.length - 1; j >= 0; j--) {
                 if (table[i][j - 1] == 0) {
@@ -178,9 +224,31 @@ $(document).ready(function () {
                 }
             }
         }
+    } */
+
+    function moveLeft(table) {
+        for (var i = 0; i < table.length; i++) {
+            var minMerge = 0;
+            for (var j = 1; j < table.length; j++) {
+                if(table[i][j] > 0) {
+                    for (var k = j; k > minMerge; k--) {
+                        if (table[i][k - 1] == 0) {
+                            table[i][k - 1] = table[i][k];
+                            table[i][k] = 0;
+                        } else if (table[i][k - 1] == table[i][k]) {
+                            incrementScore(table[i][k] * 2)
+                            table[i][k - 1] += table[i][k];
+                            table[i][k] = 0;
+                            minMerge = k;
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    function moveRight(table) {
+    // Old Version
+    /* function moveRight(table) {
         for (var i = 0; i < table.length; i++) {
             for (var j = 0; j < table.length; j++) {
                 if (table[i][j + 1] == 0) {
@@ -198,6 +266,27 @@ $(document).ready(function () {
                 if (table[i][j + 1] == 0) {
                     table[i][j + 1] = table[i][j];
                     table[i][j] = 0;
+                }
+            }
+        }
+    } */
+
+    function moveRight(table) {
+        for (var i = 0; i < table.length; i++) {
+            var minMerge = table.length - 1;
+            for (var j = table.length - 2; j >= 0; j--) {
+                if(table[i][j] > 0){
+                    for(var k = j; k < minMerge; k++){
+                        if (table[i][k + 1] == 0) {
+                            table[i][k + 1] = table[i][k];
+                            table[i][k] = 0;
+                        } else if (table[i][k + 1] == table[i][k]) {
+                            incrementScore(table[i][k] * 2)
+                            table[i][k + 1] += table[i][k];
+                            table[i][k] = 0;
+                            minMerge = k;
+                        }
+                    }
                 }
             }
         }
